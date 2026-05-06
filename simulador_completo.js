@@ -228,7 +228,7 @@ function solicitarCredito(){
         plazo: plazoCalculado,
         cuota: cuotaCalculada,
         aprobado: creditoAprobado
-    };
+    }
 
     creditos.push(nuevoCredito);
 
