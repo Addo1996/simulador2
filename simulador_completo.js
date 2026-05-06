@@ -171,33 +171,25 @@ function calcularCredito(){
         mostrarTexto("resultadoCredito", "Primero busque un cliente");
         return;
     }
-
     // 2. Obtener datos
     let monto = recuperarFloat("montoCredito");
     let plazo = recuperarInt("plazoCredito");
-
     montoCalculado = monto;
     plazoCalculado = plazo;
-
     // 3. Calcular capacidad de pago
     let capacidadPago = clienteSeleccionado.ingresos - clienteSeleccionado.egresos;
-
     // 4. Calcular total a pagar (interés simple)
     let interes = monto * (tasaInteres / 100);
     let totalPagar = monto + interes;
-
     // 5. Calcular cuota mensual
     let cuota = totalPagar / plazo;
-
     cuotaCalculada = cuota;
-
     // 6. Evaluar crédito
     if(cuota <= capacidadPago){
         creditoAprobado = true;
     } else {
         creditoAprobado = false;
     }
-
     // 7. Mostrar resultado
     let texto = "RESULTADO CREDITO<br>" +
             "Capacidad de pago: " + capacidadPago + "<br>" +
@@ -212,25 +204,27 @@ function calcularCredito(){
     resultado.className = "aprobado";
     } else {
     resultado.className = "rechazado";
-    } document.getElementById("btnSolicitarCredito").disabled = false;
+    } document.getElementById("btnAsignarCredito").disabled = !creditoAprobado;
 }
 
-function solicitarCredito(){
+function asignarCredito(){
 
     if(clienteSeleccionado == null){
         alert("Primero busque un cliente");
         return;
     }
 
-    let nuevoCredito = {
+    let credito = {
         cedula: clienteSeleccionado.cedula,
+        nombre: clienteSeleccionado.nombre,
+        apellido: clienteSeleccionado.apellido,
         monto: montoCalculado,
+        tasa: tasaInteres,
         plazo: plazoCalculado,
-        cuota: cuotaCalculada,
-        aprobado: creditoAprobado
-    }
+        cuota: cuotaCalculada
+    };
 
-    creditos.push(nuevoCredito);
+    creditos.push(credito);
 
-    alert("Crédito guardado");
+    alert("Crédito asignado correctamente");
 }
