@@ -17,6 +17,7 @@ function ocultarSecciones() {
     // Quitamos la clase "activa" a las secciones identificadas en el HTML
     document.getElementById("clientes").classList.remove("activa");
     document.getElementById("parametros").classList.remove("activa");
+    document.getElementById("credito").classList.remove("activa");
 }
 
 function mostrarSeccion(id) {
@@ -92,9 +93,9 @@ function pintarClientes() {
             "<td>" +
                 
                 "<button onclick=\"seleccionarCliente('" + c.cedula + "')\">Actualizar</button>" +
-                "<button onclick=\"eliminarCliente('" + c.cedula + "')\">Eliminar</button>"
-            "</td>" +
-        "</tr>";
+                "<button onclick=\"eliminarCliente('" + c.cedula + "')\">Eliminar</button>" +
+                "</td>" +
+                "</tr>";
     }
     tabla.innerHTML = contenidoHTML;
 }
@@ -102,7 +103,7 @@ function pintarClientes() {
 function buscarCliente(cedula) {
 
     for (let i = 0; i < clientes.length; i++) {
-        if (clientes[i].cedula == cedula) {
+        if (clientes[i].cedula === cedula) {
             return clientes[i]; // Retorna el objeto si lo encuentra
         }
     }
@@ -136,11 +137,100 @@ function eliminarCliente(cedula) {
 
     for (let i = 0; i < clientes.length; i++) {
 
-        if (clientes[i].cedula == cedula) {
+        if (clientes[i].cedula === cedula) {
             clientes.splice(i, 1); // elimina del arreglo
             break;
         }
     }
 
     pintarClientes(); // refresca tabla
+}
+
+function buscarClienteCredito(){
+    let cedula = recuperaraTexto("buscarCedulaCredito");
+    let cliente = buscarCliente(cedula);
+    if(cliente != null){
+        clienteSeleccionado = cliente;
+      let texto = "Cédula: " + cliente.cedula + "<br>" +
+            "Nombre: " + cliente.nombre + "<br>" +
+            "Apellido: " + cliente.apellido + "<br>" +
+            "Ingresos: " + cliente.ingresos + "<br>" +
+            "Egresos: " + cliente.egresos;
+
+    document.getElementById("datosClienteCredito").innerHTML = texto;
+    }else{
+        document.getElementById("datosClienteCredito").innerHTML = "Cliente no encontrado";
+    }
+}
+
+
+function calcularCredito(){
+
+    // 1. Validar que haya cliente seleccionado
+    if(clienteSeleccionado == null){
+        mostrarTexto("resultadoCredito", "Primero busque un cliente");
+        return;
+    }
+
+    // 2. Obtener datos
+    let monto = recuperarFloat("montoCredito");
+    let plazo = recuperarInt("plazoCredito");
+
+    montoCalculado = monto;
+    plazoCalculado = plazo;
+
+    // 3. Calcular capacidad de pago
+    let capacidadPago = clienteSeleccionado.ingresos - clienteSeleccionado.egresos;
+
+    // 4. Calcular total a pagar (interés simple)
+    let interes = monto * (tasaInteres / 100);
+    let totalPagar = monto + interes;
+
+    // 5. Calcular cuota mensual
+    let cuota = totalPagar / plazo;
+
+    cuotaCalculada = cuota;
+
+    // 6. Evaluar crédito
+    if(cuota <= capacidadPago){
+        creditoAprobado = true;
+    } else {
+        creditoAprobado = false;
+    }
+
+    // 7. Mostrar resultado
+    let texto = "RESULTADO CREDITO<br>" +
+            "Capacidad de pago: " + capacidadPago + "<br>" +
+            "Total a pagar: " + totalPagar + "<br>" +
+            "Cuota mensual: " + cuota + "<br>" +
+            "RESULTADO: " + (creditoAprobado ? "APROBADO" : "RECHAZADO");
+    let resultado = document.getElementById("resultadoCredito");
+
+    resultado.innerHTML = texto;
+
+    if(creditoAprobado){
+    resultado.className = "aprobado";
+    } else {
+    resultado.className = "rechazado";
+    } document.getElementById("btnSolicitarCredito").disabled = false;
+}
+
+function solicitarCredito(){
+
+    if(clienteSeleccionado == null){
+        alert("Primero busque un cliente");
+        return;
+    }
+
+    let nuevoCredito = {
+        cedula: clienteSeleccionado.cedula,
+        monto: montoCalculado,
+        plazo: plazoCalculado,
+        cuota: cuotaCalculada,
+        aprobado: creditoAprobado
+    };
+
+    creditos.push(nuevoCredito);
+
+    alert("Crédito guardado");
 }
