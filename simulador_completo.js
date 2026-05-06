@@ -257,3 +257,13 @@ function pintarCreditos(creditos){
     }
     tabla.innerHTML = contenido;
 }
+
+function buscarCreditosCliente(){
+
+    let cedula = recuperaraTexto("buscarCedulaListado");
+
+    let creditosCliente = buscarCreditos(cedula);
+
+    pintarCreditos(creditosCliente);
+
+}
