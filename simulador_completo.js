@@ -19,6 +19,7 @@ function ocultarSecciones() {
     document.getElementById("parametros").classList.remove("activa");
     document.getElementById("credito").classList.remove("activa");
     document.getElementById("listaCreditos").classList.remove("activa");
+    document.getElementById("contacto").classList.remove("activa");
 }
 
 function mostrarSeccion(id) {
@@ -51,6 +52,7 @@ function guardarCliente() {
     let ape = recuperaraTexto("apellido");
     let ing = recuperarFloat("ingresos");
     let egr = recuperarFloat("egresos");
+    let email = recuperaraTexto("email");
 
     // 2. Verificar si el cliente ya existe para decidir si Crear o Actualizar
     let clienteExistente = buscarCliente(ced);
@@ -61,6 +63,7 @@ function guardarCliente() {
             cedula: ced,
             nombre: nom,
             apellido: ape,
+            email: email,
             ingresos: ing,
             egresos: egr
         };
@@ -69,6 +72,7 @@ function guardarCliente() {
         // Actualizar datos del cliente 
         clienteExistente.nombre = nom;
         clienteExistente.apellido = ape;
+        clienteExistente.email = email;
         clienteExistente.ingresos = ing;
         clienteExistente.egresos = egr;
     }
@@ -89,6 +93,7 @@ function pintarClientes() {
             "<td>" + c.cedula + "</td>" +
             "<td>" + c.nombre + "</td>" +
             "<td>" + c.apellido + "</td>" +
+            "<td>" + c.email + "</td>" +
             "<td>" + c.ingresos + "</td>" +
             "<td>" + c.egresos + "</td>" +
             "<td>" +
@@ -119,6 +124,7 @@ function seleccionarCliente(cedula) {
         mostrarTextoEnCaja("cedula", cliente.cedula);
         mostrarTextoEnCaja("nombre", cliente.nombre);
         mostrarTextoEnCaja("apellido", cliente.apellido);
+        mostrarTextoEnCaja("email", cliente.email);
         mostrarTextoEnCaja("ingresos", cliente.ingresos);
         mostrarTextoEnCaja("egresos", cliente.egresos);
     }
@@ -129,6 +135,7 @@ function limpiar() {
     mostrarTextoEnCaja("cedula", "");
     mostrarTextoEnCaja("nombre", "");
     mostrarTextoEnCaja("apellido", "");
+    mostrarTextoEnCaja("email", "");
     mostrarTextoEnCaja("ingresos", "");
     mostrarTextoEnCaja("egresos", "");
     clienteSeleccionado = null;
@@ -156,7 +163,8 @@ function buscarClienteCredito(){
             "Nombre: " + cliente.nombre + "<br>" +
             "Apellido: " + cliente.apellido + "<br>" +
             "Ingresos: " + cliente.ingresos + "<br>" +
-            "Egresos: " + cliente.egresos;
+            "Egresos: " + cliente.egresos + "<br>" +
+            "Email: " + cliente.email;
 
     document.getElementById("datosClienteCredito").innerHTML = texto;
     }else{
@@ -241,20 +249,31 @@ function buscarCreditos(cedula){
 }
 
 function pintarCreditos(creditos){
+
     let tabla = document.getElementById("tablaCreditos");
     let contenido = "";
-    for(let i=0; i<creditos.length; i++){
+
+    for(let i = 0; i < creditos.length; i++){
+
         let c = creditos[i];
+
         contenido += "<tr>" +
             "<td>" + c.cedula + "</td>" +
             "<td>" + c.nombre + "</td>" +
             "<td>" + c.apellido + "</td>" +
+            "<td>" + c.email + "</td>"+
             "<td>" + c.monto + "</td>" +
             "<td>" + c.tasa + "%</td>" +
             "<td>" + c.plazo + "</td>" +
             "<td>" + c.cuota + "</td>" +
+
+            "<td>" +
+            "<button onclick=\"eliminarCreditos('" + c.cedula + "')\">Eliminar</button>" +
+            "</td>" +
+
             "</tr>";
     }
+
     tabla.innerHTML = contenido;
 }
 
@@ -266,4 +285,18 @@ function buscarCreditosCliente(){
 
     pintarCreditos(creditosCliente);
 
+}
+
+function eliminarCreditos(cedula){
+    for(let i=creditos.length -1; i>=0; i++){
+        if(creditos[i].cedula === cedula){
+            creditos.splice(i, 1);
+        }
+    }
+    pintarCreditos(creditos);
+}
+
+function mostrarContacto(){
+    mostrarSeccion('contacto');
+    document.getElementById("contacto").innerHTML = "Desarrollado por: Addonys Herrera";
 }

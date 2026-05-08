@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Sistema de Créditos</title>
+  <link rel="stylesheet" href="simulador_completo.css">
 </head>
 <body>
 
 <header>
   <h1>Sistema Básico de Créditos</h1>
-   <link rel="stylesheet" href="simulador_completo.css">
+   
 </header>
 
 <nav>
@@ -16,6 +17,7 @@
   <button onclick="mostrarSeccion('clientes')">Clientes</button>
   <button onclick="mostrarSeccion('credito')">Créditos</button>
   <button onclick="mostrarSeccion('listaCreditos')">Créditos Registrados</button>
+  <button onclick="mostrarSeccion('contacto')">Contacto</button>
 </nav>
 
 <section id="parametros" class="activa">
@@ -36,6 +38,7 @@
 <input type="text" id="cedula" placeholder="Cédula">
 <input type="text" id="nombre" placeholder="Nombre">
 <input type="text" id="apellido" placeholder="Apellido">
+<input type="email" id="email" placeholder="Email">
 <input type="number" id="ingresos" placeholder="Ingresos">
 <input type="number" id="egresos" placeholder="Egresos">
 
@@ -50,6 +53,7 @@
         <th>Cédula</th>
         <th>Nombre</th>
         <th>Apellido</th>
+        <th>Email</th>
         <th>Ingresos</th>
         <th>Egresos</th>
         <th>Acciones</th>
@@ -93,43 +97,15 @@
         <th>Cédula</th>
         <th>Nombre</th>
         <th>Apellido</th>
+        <th>Email</th>
         <th>Monto</th>
         <th>Tasa</th>
         <th>Plazo</th>
         <th>Cuota</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody id="tablaCreditos">
-       <tr>
-          <td>1712345678</td>
-          <td>Juan</td>
-          <td>Pérez</td>
-          <td>3000</td>
-          <td>15%</td>
-          <td>12 meses</td>
-          <td>287.50</td>
-          <td><button>Eliminar</button></td>
-        </tr>
-        <tr>
-          <td>1723456789</td>
-          <td>María</td>
-          <td>Gómez</td>
-          <td>5000</td>
-          <td>14%</td>
-          <td>24 meses</td>
-          <td>237.50</td>
-          <td><button>Eliminar</button></td>
-        </tr>
-        <tr>
-          <td>1734567890</td>
-          <td>Carlos</td>
-          <td>Ramírez</td>
-          <td>1500</td>
-          <td>16%</td>
-          <td>6 meses</td>
-          <td>290.00</td>
-          <td><button>Eliminar</button></td>
-        </tr>
     </tbody>
   </table>
 </section>
@@ -140,4 +116,9 @@
 <script src="simulador_completo.js"></script>
 <script src="utilitarios.js"></script>
 </body>
+
+<section id="contacto">
+  <h3>Desarrolado por: Addonys Herrera</h3>
+  <p id="contacto"></p>
+</section>
 </html>
