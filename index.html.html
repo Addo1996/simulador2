@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Sistema de Créditos</title>
   <link rel="stylesheet" href="simulador_completo.css">
 </head>
+
 <body>
 
 <header>
   <h1>Sistema Básico de Créditos</h1>
-   
 </header>
 
 <nav>
@@ -18,29 +19,42 @@
   <button onclick="mostrarSeccion('credito')">Créditos</button>
   <button onclick="mostrarSeccion('listaCreditos')">Créditos Registrados</button>
   <button onclick="mostrarSeccion('contacto')">Contacto</button>
+  <button onclick="mostrarSeccion('acercaDe')">Acerca de</button>
 </nav>
 
+<!-- SECCIÓN PARÁMETROS -->
 <section id="parametros" class="activa">
+
   <h2>Configurar Parámetros</h2>
 
   <label>Tasa de interés:</label>
+
   <input type="number" id="tasaInteres" min="10" max="20" value="15">
+
   <span>%</span>
 
-  <br>
+  <br><br>
+  <label>Monto Maximo</label>
+  <input type="number" id="montoMaximo" placeholder="montoMximo" value="10000"/>
+
   <button onclick="guardarTasa()">Guardar tasa</button>
 
   <p id="mensajeTasa"></p>
+
 </section>
 
+<!-- SECCIÓN CLIENTES -->
 <section id="clientes">
+
   <h2>Registro de Clientes</h2>
-<input type="text" id="cedula" placeholder="Cédula">
-<input type="text" id="nombre" placeholder="Nombre">
-<input type="text" id="apellido" placeholder="Apellido">
-<input type="email" id="email" placeholder="Email">
-<input type="number" id="ingresos" placeholder="Ingresos">
-<input type="number" id="egresos" placeholder="Egresos">
+
+  <input type="text" id="cedula" placeholder="Cédula">
+  <input type="text" id="nombre" placeholder="Nombre">
+  <input type="text" id="apellido" placeholder="Apellido">
+  <input type="text" id="telefono" placeholder="Telefono">
+  <input type="email" id="email" placeholder="Email">
+  <input type="number" id="ingresos" placeholder="Ingresos">
+  <input type="number" id="egresos" placeholder="Egresos">
 
   <br>
 
@@ -48,32 +62,41 @@
   <button onclick="limpiar()">Limpiar</button>
 
   <table>
+
     <thead>
       <tr>
         <th>Cédula</th>
         <th>Nombre</th>
         <th>Apellido</th>
+        <th>Telefono</th>
         <th>Email</th>
         <th>Ingresos</th>
         <th>Egresos</th>
         <th>Acciones</th>
       </tr>
     </thead>
-    <tbody id="tablaClientes">
-      
-    </tbody>
+
+    <tbody id="tablaClientes"></tbody>
+
   </table>
+
 </section>
+
+<!-- SECCIÓN CRÉDITO -->
 <section id="credito">
+
   <h2>Solicitar Crédito</h2>
 
   <input type="text" id="buscarCedulaCredito" placeholder="Cédula del cliente">
+
   <button onclick="buscarClienteCredito()">Buscar cliente</button>
 
   <div id="datosClienteCredito" class="card"></div>
 
   <input type="number" id="montoCredito" placeholder="Monto de Crédito">
+
   <input type="number" id="plazoCredito" placeholder="Plazo (meses)">
+
   <br>
 
   <button onclick="calcularCredito()">Calcular crédito</button>
@@ -82,21 +105,30 @@
 
   <button id="btnAsignarCredito" onclick="asignarCredito()" disabled>
     Asignar Crédito
-</button>
+  </button>
+
 </section>
+
+<!-- SECCIÓN CRÉDITOS REGISTRADOS -->
 <section id="listaCreditos">
+
   <h2>Créditos Registrados</h2>
 
-  <input type="text" id="buscarCedulaListado" >
+  <input type="text" id="buscarCedulaListado" placeholder="Buscar por cédula">
+
   <button onclick="buscarCreditosCliente()">Buscar</button>
+
   <button onclick="pintarCreditos(creditos)">Ver todos</button>
+  <button onclick="mostrarCreditosVIP()">Ver créditos VIP</button>
 
   <table>
+
     <thead>
       <tr>
         <th>Cédula</th>
         <th>Nombre</th>
         <th>Apellido</th>
+        <th>Telefono</th>
         <th>Email</th>
         <th>Monto</th>
         <th>Tasa</th>
@@ -105,20 +137,57 @@
         <th>Acciones</th>
       </tr>
     </thead>
-    <tbody id="tablaCreditos">
-    </tbody>
+
+    <tbody id="tablaCreditos"></tbody>
+
   </table>
+
 </section>
 
+<!-- SECCIÓN CONTACTOS -->
+<section id="contacto">
 
+  <h2>Contactos</h2>
 
+  <input type="text" id="filtroContactos" placeholder="Buscar contactos">
+
+  <button onclick="filtrarContactos()">Buscar</button>
+
+  <h3>Desarrollado por: Addonys Herrera</h3>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Número</th>
+      </tr>
+    </thead>
+
+    <tbody id="tablaContactos"></tbody>
+
+  </table>
+
+  <p id="infoContacto"></p>
+
+</section>
+<section id="acercaDe">
+  <h2>Acerca del Desarrollador</h2>
+  <div class="card">
+    <h3>Addonys Herrera</h3>
+    <p><strong>Carrera:</strong>
+    Desarrolo de Software</p>
+    <p><strong>Instagram</strong>
+    @Adonnys96</p>
+    <p><strong>Frase:</strong>
+    "Nunca rendirse"</p>
+    <p><strong>GitHub:</strong>
+    github.com/addonys</p>
+  </div>
+</section>
 
 <script src="simulador_completo.js"></script>
 <script src="utilitarios.js"></script>
-</body>
 
-<section id="contacto">
-  <h3>Desarrolado por: Addonys Herrera</h3>
-  <p id="contacto"></p>
-</section>
+</body>
 </html>
